@@ -1,0 +1,92 @@
+version: '3'
+services:
+
+    prometheus:
+        image: prom/prometheus:latest
+        container_name: prometheus
+        ports:
+          - "9090:9090"
+        volumes:
+          - $PWD:/etc/prometheus/           
+          - prometheus_data:/prometheus
+        command: [ "--config.file=/etc/prometheus/prometheus.yml", 
+                 "--storage.tsdb.path=/prometheus", 
+                 "--storage.tsdb.retention=15d", 
+                 "--web.enable-admin-api", 
+                 "--web.enable-lifecycle",
+                 "--web.console.libraries=/usr/share/prometheus/console_libraries", 
+                 "--web.console.templates=/usr/share/prometheus/consoles" ]
+    
+    node-exporter:
+        image: prom/node-exporter:latest
+        container_name: node-exporter
+        ports:
+          - '9100:9100'
+
+    grafana:
+        image: grafana/grafana:latest
+        container_name: grafana
+        ports:
+          - "3000:3000"
+        volumes:
+          - grafana_data:/var/lib/grafana
+
+
+    cadvisor:
+        image: google/cadvisor:latest
+        container_name: cadvisor
+        ports:
+          - "8095:8080"
+        volumes:
+          - /:/rootfs:ro
+          - /var/run:/var/run:rw
+          - /sys:/sys:ro
+          - /var/lib/docker/:/var/lib/docker:ro
+
+    alertmanager:
+        image: prom/alertmanager
+        container_name: alertmanager        
+        depends_on: 
+          - "ping"
+        ports:
+          - 9093:9093
+        volumes:
+          - $PWD/config.yml:/etc/alertmanager/alertmanager.yml
+
+    mailslurper:
+        image: marcopas/docker-mailslurper
+        container_name: mailslurper        
+        ports:
+          - 2500:2500
+          - 9000:8080
+          - 8085:8085
+        volumes:
+          - $PWD/mailslurper-config.json:/opt/mailslurper/config.json
+
+    ping:
+        image: alpine
+        container_name: ping
+        command: ping -t 10 localhost
+
+    rabbitmq:
+        image: rabbitmq:3-management
+        container_name: rabbitmq
+        ports:
+          - 15672:15672 
+          - 9191:9090
+    
+    rabbitmq-exporter:
+        image: kbudde/rabbitmq-exporter
+        container_name: rabbitmq-exporter
+        network_mode: "service:rabbitmq"
+        depends_on: 
+          - "rabbitmq"
+  
+    blackbox-exporter:
+        image: prom/blackbox-exporter
+        container_name: blackbox-exporter
+        ports:
+          - 9115:9115
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
