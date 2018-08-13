@@ -1,0 +1,41 @@
+README
+
+# Trigger consul reload when consul.d/ changed
+watchman -- trigger consul.d/ reload-consul '*.json' -- consul reload 
+watchman -- trigger consul.d/ reload-consul-done '*.json' -- say reloading consul responding to changes in 
+
+# Trigger reload when prometheus.yml changed
+watchman -- trigger . reload-prometheus 'prometheus.yml' -- curl -X POST http://localhost:9090/-/reload
+
+watchman watch-list
+watchman trigger-list .
+
+watchman -- trigger . reload-prometheus 'prometheus.yml' -- curl -X POST http://localhost:9090/-/reload
+watchman -- trigger . reload-prometheus-done 'prometheus.yml' -- say reloading
+
+
+watchman find consul.d/ '*.json'
+
+
+- job_name: 'consul-prometheus'
+    consul_sd_configs:
+      - server:   '192.168.31.51:8500'
+        services: ['prometheus', 'node-exporter', 'grafana']
+    relabel_configs:
+      - source_labels: ['__metrics_path__']
+        regex:         '/metrics'
+        target_label:  __metrics_path__
+        replacement:   '/metrics'
+      - source_labels: ['__meta_consul_tags']
+        regex: .*prometheus-target.*
+        action: keep
+
+在consul_sd_configs下，server是consul服务器的访问地址，services是微服务名的数组，如果什么都不填，则默认取consul上注册的所有微服务。relabel_configs是修改默认配置的规则
+
+当把鼠标放在某个label上时，显示了Before relabeling的配置，可以看到__metrics_path__='/metrics'
+
+relabel_configs 用法可以参考 https://prometheus.io/docs/prometheus/latest/configuration/configuration/# 
+只有consul的service的tag为prometheus-target
+
+
+https://www.robustperception.io/finding-consul-services-to-monitor-with-prometheus

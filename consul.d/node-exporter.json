@@ -1,0 +1,14 @@
+{
+  "service":{
+    "name": "node-exporter",
+    "address": "node-exporter",
+    "port": 9100,
+    "tags": ["prometheus-target", "production"],
+    "checks": [
+        {
+            "http": "http://192.168.31.51:9100/metrics",
+            "interval": "15s"
+        }
+    ]
+  }
+}

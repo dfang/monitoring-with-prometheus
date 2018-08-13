@@ -1,0 +1,14 @@
+{
+  "service":{
+    "name": "grafana",
+    "address": "grafana",
+    "port": 3000,
+    "tags": ["prometheus-target", "production"],
+    "checks": [
+        {
+            "http": "http://192.168.31.51:3000/metrics",
+            "interval": "15s"
+        }
+    ]
+  }
+}

@@ -81,7 +81,15 @@ services:
         network_mode: "service:rabbitmq"
         depends_on: 
           - "rabbitmq"
-  
+    
+    consul-exporter:
+        image: prom/consul-exporter
+        container_name: consul-exporter
+        # network_mode: "service:consul"
+        command: [ "--consul.server=192.168.31.51:8500" ]
+        ports:
+          - 9107:9107
+
     blackbox-exporter:
         image: prom/blackbox-exporter
         container_name: blackbox-exporter

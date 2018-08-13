@@ -1,0 +1,15 @@
+{
+  "service":{
+    "id": "nodexxxx",
+    "name": "prometheus",
+    "address": "prometheus",
+    "port": 9090,
+    "tags": ["prometheus-target", "production"],
+    "checks": [
+        {
+            "http": "http://192.168.31.51:9090/metrics",
+            "interval": "15s"
+        }
+    ]
+  }
+}

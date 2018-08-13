@@ -1,0 +1,14 @@
+{
+  "service":{
+    "name": "cadvisor",
+    "address": "cadvisor",
+    "port": 8080,
+    "tags": ["prometheus-target", "production"],
+    "checks": [
+        {
+            "http": "http://192.168.31.51:8095/metrics",
+            "interval": "15s"
+        }
+    ]
+  }
+}
