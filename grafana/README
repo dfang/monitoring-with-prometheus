@@ -1,10 +1,18 @@
 README
 
+demo dashboards
+https://grafana.demo.cloudalchemy.org
 
+
+Monitoring Kubernetes
+https://github.com/grafana/kubernetes-app
+https://github.com/giantswarm/kubernetes-prometheus
+
+Kubernetes Cluster Autoscaler
+https://grafana.com/dashboards/3831
 
 
 Dashboards maybe useful
-
 https://grafana.com/dashboards/3662
 
 

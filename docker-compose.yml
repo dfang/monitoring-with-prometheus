@@ -134,12 +134,17 @@ services:
     traefik:
         image: traefik:1.7
         container_name: traefik
-        command: --api --docker --metrics.prometheus --docker.domain=docker.local --logLevel="DEBUG"
+        # command: --api --docker --metrics.prometheus --docker.domain=docker.local --logLevel="DEBUG"
+        restart: always
         ports:
           - 8000:80
           - 8080:8080
         volumes:
+          - ./traefik/config.toml:/etc/traefik/traefik.toml
           - /var/run/docker.sock:/var/run/docker.sock
+        # labels:
+          # - "traefik.frontend.rule=Host:grafana.docker.local"
+          # - traefik.port=8080
         # network_mode: host
 volumes:
     prometheus_data: {}
