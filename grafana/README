@@ -1,0 +1,25 @@
+README
+
+
+
+
+Dashboards maybe useful
+
+https://grafana.com/dashboards/3662
+
+
+RabbitMQ Monitoring 
+https://grafana.com/dashboards/4279
+
+3890
+CoinmarketCap-single
+
+coinmarketcap-exporter
+github-exporter
+
+https://www.brianchristner.io/monitor-your-github-repos-with-docker/
+
+
+
+about __inputs
+https://community.grafana.com/t/set---inputs-values-when-pushing-a-dashboard-json-config-to-grafana-via-the-api/2836

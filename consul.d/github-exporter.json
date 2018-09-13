@@ -1,12 +1,12 @@
 {
   "service":{
-    "name": "rabbitmq-exporter",
-    "address": "rabbitmq",
-    "port": 9090,
+    "name": "github-exporter",
+    "address": "github-exporter",
+    "port": 9171,
     "tags": ["prometheus-target", "production"],
     "checks": [
         {
-            "http": "http://rabbitmq:9090/metrics",
+            "http": "http://github-exporter:9171/metrics",
             "interval": "15s"
         }
     ]

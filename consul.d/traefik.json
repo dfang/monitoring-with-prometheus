@@ -1,12 +1,12 @@
 {
   "service":{
-    "name": "rabbitmq-exporter",
-    "address": "rabbitmq",
-    "port": 9090,
+    "name": "traefik",
+    "address": "traefik",
+    "port": 8080,
     "tags": ["prometheus-target", "production"],
     "checks": [
         {
-            "http": "http://rabbitmq:9090/metrics",
+            "http": "http://traefik:8080/metrics",
             "interval": "15s"
         }
     ]

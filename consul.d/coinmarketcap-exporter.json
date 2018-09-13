@@ -1,0 +1,14 @@
+{
+  "service":{
+    "name": "coinmarketcap-exporter",
+    "address": "coinmarketcap-exporter",
+    "port": 9101,
+    "tags": ["prometheus-target", "production"],
+    "checks": [
+        {
+            "http": "http://coinmarketcap-exporter:9101/metrics",
+            "interval": "15s"
+        }
+    ]
+  }
+}

@@ -16,6 +16,8 @@ watchman -- trigger . reload-prometheus-done 'prometheus.yml' -- say reloading
 
 watchman find consul.d/ '*.json'
 
+docker-compose up -d --force-recreate grafana
+docker-compose up -d --force-recreate prometheus
 
 - job_name: 'consul-prometheus'
     consul_sd_configs:
@@ -38,4 +40,7 @@ relabel_configs 用法可以参考 https://prometheus.io/docs/prometheus/latest/
 只有consul的service的tag为prometheus-target
 
 
+https://www.robustperception.io/finding-consul-services-to-monitor-with-prometheus
+https://prometheus.io/docs/prometheus/latest/configuration/configuration/#%3Cconsul_sd_config%3E
+https://yunlzheng.gitbook.io/prometheus-book/
 https://www.robustperception.io/finding-consul-services-to-monitor-with-prometheus
